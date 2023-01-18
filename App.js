@@ -32,13 +32,15 @@ export default function App() {
           // minZoomLevel={1}
         >
           <Marker
+            draggable
             coordinate={localizacao}
             title="Aqui!!!"
-            draggable
             onPress={(event) => {
-              console.log(event.nativeEvent);
+              console.log(event.NativeEvent);
             }}
-          />
+          >
+            <Image source={require()} />
+          </Marker>
         </MapView>
       </View>
     </>
