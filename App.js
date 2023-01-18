@@ -3,12 +3,12 @@ import MapView from "react-native-maps";
 
 export default function App() {
   const regiaoInicial = {
-    latitude: 37.78825,
-    longitude: -122.4324,
+    latitude: -10,
+    longitude: -55,
     // latitudeDelta: 0.09,
     // longitudeDelta: 0.0421,
-    latitudeDelta: 2,
-    longitudeDelta: 2,
+    latitudeDelta: 10,
+    longitudeDelta: 10,
   };
 
   return (
