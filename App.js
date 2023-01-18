@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, StatusBar } from "react-native";
-import MapView from "react-native-maps";
+import MapView, { Marker } from "react-native-maps";
 
 export default function App() {
   const regiaoInicial = {
@@ -7,6 +7,13 @@ export default function App() {
     longitude: -55,
     // latitudeDelta: 0.09,
     // longitudeDelta: 0.0421,
+    latitudeDelta: 10,
+    longitudeDelta: 10,
+  };
+
+  const localizacao = {
+    latitude: -33.861886,
+    longitude: -63.987,
     latitudeDelta: 10,
     longitudeDelta: 10,
   };
@@ -19,11 +26,20 @@ export default function App() {
           style={estilos.mapa}
           initialRegion={regiaoInicial}
           liteMode={false} // somente Android
-          mapType="standard" // satellite, hybrid, standard
+          mapType="satellite" // satellite, hybrid, standard
           userInterfaceStyle="dark" // somente IOS
-          maxZoomLevel={15}
-          minZoomLevel={5}
-        />
+          // maxZoomLevel={15}
+          // minZoomLevel={1}
+        >
+          <Marker
+            coordinate={localizacao}
+            title="Aqui!!!"
+            draggable
+            onPress={(event) => {
+              console.log(event.nativeEvent);
+            }}
+          />
+        </MapView>
       </View>
     </>
   );
