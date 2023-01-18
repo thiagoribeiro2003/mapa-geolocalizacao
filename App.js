@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, StatusBar } from "react-native";
+import { StyleSheet, Text, View, StatusBar, Image } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 
 export default function App() {
@@ -39,7 +39,7 @@ export default function App() {
               console.log(event.NativeEvent);
             }}
           >
-            <Image source={require()} />
+            {/* <Image source={require("./assets/iconeMarcador.png")} /> */}
           </Marker>
         </MapView>
       </View>
