@@ -1,4 +1,12 @@
-import { StyleSheet, Text, View, StatusBar, Image } from "react-native";
+import { useState } from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  StatusBar,
+  Image,
+  Pressable,
+} from "react-native";
 import MapView, { Marker } from "react-native-maps";
 
 export default function App() {
@@ -18,6 +26,13 @@ export default function App() {
     longitudeDelta: 10,
   };
 
+  const [localizacaoClicada, setLocalizacaoClicada] = useState({
+    latitude: -33.861886,
+    longitude: -63.987,
+    latitudeDelta: 10,
+    longitudeDelta: 10,
+  });
+
   return (
     <>
       <StatusBar />
@@ -30,6 +45,7 @@ export default function App() {
           userInterfaceStyle="dark" // somente IOS
           // maxZoomLevel={15}
           // minZoomLevel={1}
+          onPress={localizacaoClicada}
         >
           <Marker
             draggable
