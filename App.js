@@ -21,16 +21,12 @@ export default function App() {
   };
 
   /* Usando state para controlar a localização*/
-  const [localizacaoClicada, setLocalizacaoClicada] = useState({
-    latitude: -33.861886,
-    longitude: -63.987,
-    latitudeDelta: 10,
-    longitudeDelta: 10,
-  });
+  const [localizacaoClicada, setLocalizacaoClicada] = useState();
 
   const marcarLocal = (event) => {
     setLocalizacaoClicada({
-      ...localizacaoClicada, // o spred (...) junta os dados
+      latitudeDelta: 0.0922,
+      longitudeDelta: 0.0421,
       latitude: event.nativeEvent.coordinate.latitude,
       longitude: event.nativeEvent.coordinate.longitude,
     });
@@ -44,13 +40,10 @@ export default function App() {
       <View style={estilos.container}>
         <MapView
           style={estilos.mapa}
-          initialRegion={regiaoInicial}
-          liteMode={false} // somente Android
-          mapType="standard" // satellite, hybrid, standard
-          userInterfaceStyle="dark" // somente IOS
-          // maxZoomLevel={15}
-          // minZoomLevel={1}
-
+          region={localizacaoClicada ?? regiaoInicial}
+          liteMode={false}
+          mapType="standard"
+          userInterfaceStyle="dark"
           onPress={(e) =>
             setLocalizacaoClicada({
               ...localizacaoClicada, // o spred (...) junta os dados
@@ -59,13 +52,14 @@ export default function App() {
             })
           }
         >
-          <Marker
-            coordinate={localizacaoClicada}
-            draggable
-            //coordinate={localizacao}
-            title="Aqui!!!"
-            onPress={(e) => console.log(e.nativeEvent)}
-          />
+          {localizacaoClicada && (
+            <Marker
+              coordinate={localizacaoClicada}
+              title="Aqui!!!"
+              onPress={(e) => console.log(e.nativeEvent)}
+            />
+          )}
+
           {/* <Image source={require("./assets/iconeMarcador.png")} /> */}
         </MapView>
       </View>
