@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -6,10 +6,39 @@ import {
   StatusBar,
   Image,
   Pressable,
+  Alert,
 } from "react-native";
 import MapView, { Marker } from "react-native-maps";
+import * as Location from "expo-location";
 
 export default function App() {
+  /* State para geolocalização */
+  const [minhaLocalizacao, setMinhaLocalizacao] = useState(null);
+
+  useEffect(() => {
+    async function obterLocalizacao() {
+      // Acessando o status da requisição de permissão de uso
+      const { status } = Location.requestForegroundPermissionsAsync();
+
+      // Verificar o status
+      // if (status !== "granted") {
+      //   Alert.alert(
+      //     "Ops!",
+      //     "Você não autorizou o uso de recursos de localização"
+      //   );
+      //   return;
+      // }
+      // Acessando os dados de geolocalização
+      let localizacaoAtual = await Location.getCurrentPositionAsync({});
+
+      // Adicionando os dados ao state
+      setMinhaLocalizacao(localizacaoAtual);
+    }
+    obterLocalizacao();
+  }, []);
+
+  console.log(minhaLocalizacao);
+
   const regiaoInicial = {
     // Estado de SP
     latitude: -23.533773,
@@ -27,11 +56,9 @@ export default function App() {
     setLocalizacaoClicada({
       latitudeDelta: 0.0922,
       longitudeDelta: 0.0421,
-      latitude: event.nativeEvent.coordinate.latitude,
-      longitude: event.nativeEvent.coordinate.longitude,
+      latitude: minhaLocalizacao.coords.latitude,
+      longitude: minhaLocalizacao.coords.longitude,
     });
-
-    console.log(localizacaoClicada);
   };
 
   return (
@@ -42,15 +69,9 @@ export default function App() {
           style={estilos.mapa}
           region={localizacaoClicada ?? regiaoInicial}
           liteMode={false}
-          mapType="standard"
+          mapType="satellite"
           userInterfaceStyle="dark"
-          onPress={(e) =>
-            setLocalizacaoClicada({
-              ...localizacaoClicada, // o spred (...) junta os dados
-              latitude: e.nativeEvent.coordinate.latitude,
-              longitude: e.nativeEvent.coordinate.longitude,
-            })
-          }
+          onPress={marcarLocal}
         >
           {localizacaoClicada && (
             <Marker
