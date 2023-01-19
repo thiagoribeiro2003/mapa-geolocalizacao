@@ -7,6 +7,7 @@ import {
   Image,
   Pressable,
   Alert,
+  Button,
 } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import * as Location from "expo-location";
@@ -65,30 +66,38 @@ export default function App() {
     <>
       <StatusBar />
       <View style={estilos.container}>
-        <MapView
-          style={estilos.mapa}
-          region={localizacaoClicada ?? regiaoInicial}
-          liteMode={false}
-          mapType="satellite"
-          userInterfaceStyle="dark"
-          onPress={marcarLocal}
-        >
-          {localizacaoClicada && (
-            <Marker
-              coordinate={localizacaoClicada}
-              title="Aqui!!!"
-              onPress={(e) => console.log(e.nativeEvent)}
-            />
-          )}
+        <View style={estilos.viewBotao}>
+          <Button title="Onde Estou?" onPress={marcarLocal} />
+        </View>
 
-          {/* <Image source={require("./assets/iconeMarcador.png")} /> */}
-        </MapView>
+        <View style={estilos.viewMapa}>
+          <MapView
+            style={estilos.mapa}
+            region={localizacaoClicada ?? regiaoInicial}
+            liteMode={false}
+            mapType="satellite"
+            userInterfaceStyle="dark"
+            onPress={marcarLocal}
+          >
+            {localizacaoClicada && (
+              <Marker
+                coordinate={localizacaoClicada}
+                title="Aqui!!!"
+                onPress={(e) => console.log(e.nativeEvent)}
+              />
+            )}
+
+            {/* <Image source={require("./assets/iconeMarcador.png")} /> */}
+          </MapView>
+        </View>
       </View>
     </>
   );
 }
 
 const estilos = StyleSheet.create({
+  viewMapa: { flex: 1 },
+  viewBotao: {},
   mapa: {
     width: "100%",
     height: "100%",
